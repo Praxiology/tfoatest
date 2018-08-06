@@ -31,7 +31,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 		}catch(Exception e){
 			calrResult = "错误的表达式：" + e.getMessage();
 		}
-		ctx.write(Unpooled.copiedBuffer(calrResult.getBytes()));
+		ctx.write(Unpooled.copiedBuffer((calrResult+":"+Thread.currentThread().toString()).getBytes()));
 	}
 
 	@Override

@@ -25,7 +25,7 @@ public class ClientNetty implements Runnable{
 	@Override
 	public void run() {
         String host = "127.0.0.1";
-        int port = 9090;
+        int port = 12345;
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
             Bootstrap b = new Bootstrap();
