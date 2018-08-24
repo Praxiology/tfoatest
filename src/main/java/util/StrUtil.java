@@ -97,10 +97,7 @@ public class StrUtil {
 
     @Test
     public void testDataType() {
-        Object i = 1;
-        if (1 == (int) i) {
-            System.err.printf("%s" , "true");
-        }
+        System.err.printf("%b\n" ,"Q".equals(null) );
     }
 
     @Test

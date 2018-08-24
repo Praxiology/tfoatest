@@ -20,7 +20,7 @@ public class ModelUtil {
     public ModelUtil() {
         DbUtil.init();
         DbUtil.setColumns(new String[]{"column_name" , "data_type" , "column_comment"});
-        DbUtil.setTabs(new String[]{"oa_finance_report"});
+        DbUtil.setTabs(new String[]{"oa_finance_summary_report_relation"});
     }
 
     @Test
@@ -63,9 +63,9 @@ public class ModelUtil {
             for (Record record : list) {
                 dt = record.getStr("data_type");
                 column = record.getStr("column_name");
-                sd.append("model.set(\"");
+                sd.append("sRelation.set(\"");
                 sd.append(column);
-                sd.append("\",record.get");
+                sd.append("\",value.get");
                 addDataType(sd , dt);
                 sd.append("(\""+column+"\"));\n");
             }

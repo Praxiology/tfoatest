@@ -26,7 +26,6 @@ public class PathUtil {
             String packagePath = File.separator+cls.getPackage().getName().replace("." , File.separator)+File.separator;
             path2 = path2.replace(packagePath , "");
         }
-
         return path2;
     }
 

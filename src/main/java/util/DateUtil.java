@@ -1,5 +1,7 @@
 package util;
 
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Record;
 import org.junit.Test;
 
 import java.sql.Timestamp;
@@ -8,6 +10,14 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class DateUtil {
+
+    @Test
+    public void test_db_date() {
+        DbSource.init();
+        Record record = Db.findFirst(" select * from oa_finance_timed_task where execute_time = ?","2018-08-10" );
+        System.err.printf("%s\n" , record != null ? record.toJson() : "时间为空");
+    }
+
 
     @Test
     public void dateUtilTest() {
@@ -21,12 +31,12 @@ public class DateUtil {
     }
 
     @Test
-    public void yearMounth(){
+    public void yearMounth() {
         Calendar today = Calendar.getInstance();
         today.setTime(new Date());
         today.get(Calendar.MONTH);
         today.get(Calendar.YEAR);
-        System.err.printf("%d,%d",today.get(Calendar.MONTH),today.get(Calendar.YEAR));
+        System.err.printf("%d,%d" , today.get(Calendar.MONTH) , today.get(Calendar.YEAR));
     }
 
 

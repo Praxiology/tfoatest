@@ -1,17 +1,19 @@
 package util.file;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
 import java.io.File;
 
 public class DeleteFileUtil {
 
-    public static final String path = "E:\\base\\javaio\\Java-IO-master\\src\\com\\anxpp\\io";
+    public static final String path = "E:\\workspace\\tomcate";
 
     @Test
     public void test_delete_file() throws Exception {
         File dir = new File(path);
-        getChileDirFilesAndRemove(dir , ".java");
+        FileUtils.deleteDirectory(dir);
+       // getChileDirFilesAndRemove(dir , ".java");
     }
 
     public static File getChileDirFilesAndRemove(File file , String patten) throws Exception {
