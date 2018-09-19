@@ -17,13 +17,16 @@ public class ServerHandle implements Runnable, Handler {
 
     public ServerHandle(int port) {
         try {
+            //一个Selector实例
             selector = Selector.open();
+            //
             serverChannel = ServerSocketChannel.open();
             serverChannel.configureBlocking(false);//阻塞
-            serverChannel.socket().bind(new InetSocketAddress(port) , 1024);
-            serverChannel.register(selector , SelectionKey.OP_ACCEPT);
+            serverChannel.socket().bind(new InetSocketAddress(port) , 1);
+            SelectionKey key = serverChannel.register(selector , SelectionKey.OP_ACCEPT);
             started = true;
-            System.out.println("port:"+port);
+            //System.out.println("port:"+port);
+            System.err.printf("服务器已启动，端口号：%s\n channel:%s\n,hash:%s\n" , port , serverChannel.toString() , serverChannel.hashCode());
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
@@ -36,6 +39,7 @@ public class ServerHandle implements Runnable, Handler {
 
     @Override
     public void run() {
+        //不断的轮训
         while (started) {
             HandleUtil.handle.handleSelect(this , selector);
 			/*try{
@@ -87,7 +91,7 @@ public class ServerHandle implements Runnable, Handler {
                     byte[] bytes = new byte[buffer.remaining()];
                     buffer.get(bytes);
                     String expression = new String(bytes , "UTF-8");
-                    System.out.println("服务端收到的公式"+expression);
+                    System.err.printf("tdName:%s,channel:%s,服务端收到的公式:%s\n" ,Thread.currentThread().hashCode(), sc.hashCode(),expression);
                     String result = null;
                     try {
                         result = Calculator.Instance.cal(expression).toString();

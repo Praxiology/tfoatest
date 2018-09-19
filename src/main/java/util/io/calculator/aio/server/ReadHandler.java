@@ -18,7 +18,7 @@ public class ReadHandler implements CompletionHandler<Integer, ByteBuffer> {
 		attachment.get(message);
 		try {
 			String expression = new String(message, "UTF-8");
-			System.out.println("计算公式 " + expression);
+			System.out.println(Thread.currentThread().toString()+","+Thread.currentThread().hashCode()+","+ channel.toString()+"计算公式 " + expression);
 			String calrResult = null;
 			try{
 				calrResult = Calculator.Instance.cal(expression).toString();

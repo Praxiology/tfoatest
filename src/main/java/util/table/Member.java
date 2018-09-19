@@ -24,7 +24,20 @@ public class Member extends DbSource {
                 map.put(cid,mob) ;
                 i++;
             }
-            Db.update("update oa_member set mobile = ? where id = ? ",mob,record.getLong("id"));
+            Db.update("update oa_member set mobile = 13515659329 where id = ? ","'13515659329'",record.getLong("id"));
+        }
+    }
+
+
+    @Test
+    public void test_update(){
+        String sql = "SELECT om.* from oa_member om where om.login_name like 'cw_%'";
+        List<Record> list = Db.find(sql);
+        for (Record record : list) {
+            String name = record.getStr("name");
+            if (name.contains("集团")||name.contains("传媒")||name.contains("集团")||name.contains("集团")) {
+                Db.update("update oa_member set mobile = 15345678910  where id = ? ",record.getLong("id"));
+            }
         }
     }
 

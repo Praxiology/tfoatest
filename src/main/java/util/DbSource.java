@@ -12,18 +12,25 @@ import java.util.Properties;
  * 适应多个数据源
  */
 public class DbSource {
+    private static DruidDataSource dataSource = null;
+    public static String[] mySqlInfos = null;
+
+    static {
+        mySqlInfos = getDFInfor();
+        init(mySqlInfos);
+    }
 
     public DbSource() {
         init();
     }
-
-    public static String[] mySqlInfos = {
+    public static String[] getDFInfor(){
+        return new String[]{
             "druid.url=jdbc:mysql://stg2.v5time.net:3366/apg_oa?useUnicode=true&characterEncoding=utf-8" ,
-            "druid.name=tfte" ,
-            "druid.password=tt0fsdaefst123yQb" ,
-            "druid.username=tfte"
-    };
-    private static DruidDataSource dataSource = null;
+                    "druid.name=tfte" ,
+                    "druid.password=tt0fsdaefst123yQb" ,
+                    "druid.username=tfte"
+        };
+    }
 
     public static void init() {
         init(mySqlInfos);
@@ -50,7 +57,7 @@ public class DbSource {
     }
 
     public static void main(String[] args) {
-        DbSource.init();
+       // DbSource.init();
         System.err.printf("%s" , Db.queryStr("select version()"));
     }
 }

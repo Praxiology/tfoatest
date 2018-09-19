@@ -57,13 +57,9 @@ public class NumberUtil {
 
     @Test
     public void test_x1() {
-
-
         String[] arr1 = {"u1" , "u2"};
         String[] arr2 = {"c1"};
-
         int _unit = 0;
-
         for (; ; ) {
             int _a = _unit % 2;
             int c_index = ((_a == 1) ? (_unit-1) : _unit) / 2;

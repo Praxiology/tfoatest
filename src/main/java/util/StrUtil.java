@@ -107,18 +107,16 @@ public class StrUtil {
 
     @Test
     public void test_x_list() {
-
         List<Long> ls = new ArrayList<>();
         ls.add(1l);
         ls.add(1l);
         ls.add(1l);
         System.err.printf("%s" , ls.toString().replace("[" , "").replace("]" , ""));
-
     }
 
     @Test
     public void test_x_buidder() {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder("999999999999999");
         System.err.printf("%d" ,sb.length());
     }
 

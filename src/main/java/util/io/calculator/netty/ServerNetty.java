@@ -1,4 +1,5 @@
 package util.io.calculator.netty;
+
 import io.netty.bootstrap.ServerBootstrap;
 
 import io.netty.channel.ChannelFuture;
@@ -22,20 +23,25 @@ public class ServerNetty {
         EventLoopGroup workerGroup = new NioEventLoopGroup(2);
         try {
             ServerBootstrap b = new ServerBootstrap();
-            b.group(bossGroup, workerGroup)
-             .channel(NioServerSocketChannel.class)
-             .option(ChannelOption.SO_BACKLOG, 1024)
-             .childOption(ChannelOption.SO_KEEPALIVE, true)
-             .childHandler(new ChannelInitializer<SocketChannel>() {
-                 @Override
-                 public void initChannel(SocketChannel ch) throws Exception {
-                     ch.pipeline().addLast(new ServerHandler());
-                 }
-             });
+            b.group(bossGroup , workerGroup)
+                    //我要指定使用NioServerSocketChannel这种类型的通道
+                    .channel(NioServerSocketChannel.class)
+                    .option(ChannelOption.SO_BACKLOG , 1) //设置tcp列队缓冲区
+                    .option(ChannelOption.SO_SNDBUF , 1)  //设置发送缓冲大小
+                    .option(ChannelOption.SO_RCVBUF , 1)  //这是接收缓冲大小
+                    .childOption(ChannelOption.SO_KEEPALIVE , true) //保持连接
+                    //一定要使用 childHandler 去绑定具体的 事件处理器
+                    .childHandler(new ChannelInitializer<SocketChannel>() {
+                        @Override
+                        public void initChannel(SocketChannel ch) throws Exception {
+                            ch.pipeline().addLast(new ServerHandler());
+                        }
+                    });
 
             ChannelFuture f = b.bind(port).sync();
             System.out.println("服务器开启："+port);
             f.channel().closeFuture().sync();
+            System.out.println("over ?");
         } finally {
             workerGroup.shutdownGracefully();
             bossGroup.shutdownGracefully();
