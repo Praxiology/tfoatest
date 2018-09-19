@@ -4,7 +4,7 @@ import java.util.concurrent.*;
 
 public class FutureCook {
 
-    public static void main(String[] args) throws InterruptedException, ExecutionException {
+    public static void main(String[] args) throws Exception {
         long startTime = System.currentTimeMillis();
         // 第一步 网购厨具
         Callable<Chuju> onlineShopping = new Callable<Chuju>() {
@@ -19,7 +19,6 @@ public class FutureCook {
             }
 
         };
-        FutureTask<Chuju> Chujutask = new FutureTask<Chuju>(onlineShopping);
 
         // 第二步 去超市购买食材
         Callable<Shicai> markShopping = new Callable<Shicai>() {
@@ -33,10 +32,9 @@ public class FutureCook {
             }
 
         };
+        //
         FutureTask<Shicai> ShicaiTask = new FutureTask<Shicai>(markShopping);
-        //厨具和食材准备线程
-        Thread chujutaskTd = new Thread(Chujutask);
-        Thread shicaiTaskTd = new Thread(ShicaiTask);
+        FutureTask<Chuju> Chujutask = new FutureTask<Chuju>(onlineShopping);
 
         //不断循环判断厨具是否准备好
         Thread askChuJuTask = new Thread(new Runnable() {
@@ -85,8 +83,8 @@ public class FutureCook {
 
         //交给线程池处理
         ExecutorService service = Executors.newFixedThreadPool(4);
-        service.submit(chujutaskTd);
-        service.submit(shicaiTaskTd);
+        service.submit(Chujutask);
+        service.submit(ShicaiTask);
         service.submit(askChuJuTask);
         service.submit(asKShicaiTask);
         service.shutdown();
